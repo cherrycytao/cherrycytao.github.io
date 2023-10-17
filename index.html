@@ -40,5 +40,69 @@
         };
         vegaEmbed("#viz", vlSpec);
     </script>
+    <script>
+    // <div id="title">
+    // </div>
+    // <div id="vis"/>
+        var vlSpec = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "data": {"url": "https://raw.githubusercontent.com/cherrycytao/building_inventory.csv"},
+            "width": 2000,
+            "height": 2000,
+            "hconcat": [
+                {"layer": [
+                    {"mark": {"type":"bar","cornerRadiusTopLeft": 4, "cornerRadiusTopRight": 4},
+                    "encoding": {
+                    "x": {"field": "Agency Name", "type": "nominal",
+                    "sort": {"op": "sum", "field": "Square Footage"}},
+                    "y": {"aggregate": "sum", "field": "Square Footage"},
+                    "color": {"value": "gray"}
+                    }     
+                    },
+                 {"transform": 
+                [
+                 {"filter": {"selection": "brush"}}
+                ],
+                    "mark": {"type":"bar","cornerRadiusTopLeft": 4, "cornerRadiusTopRight": 4},
+                    "encoding": {
+                    "x": {"field": "Agency Name", "type": "nominal",
+                    "sort": {"op": "sum", "field": "Square Footage"}},
+                    "y": {"aggregate": "sum", "field": "Square Footage"},
+                    "color": {"value": "#FDD037"}
+                    }
+                }
+                ]
+                },
+                {"layer":[
+                    {"mark": "point",
+                    "encoding": {
+                    "x": {"field": "Year Acquired", "type": "quantitative",
+                    "scale": {"domain": [1700,2020]}},
+                    "y": {"field": "Year Constructed", "type": "quantitative",
+                    "scale": {"domain": [1700,2020]}},
+                    "color": {"value": "gray"}
+                    }
+                    },
+                    { "selection": {
+                    "brush": {"type": "interval"}},
+                    "transform": 
+                    [
+                    {"filter": {"selection": "brush"}}
+                    ],
+                    "mark": "point",
+                    "encoding": {
+                        "x": {"field": "Year Acquired", "type": "quantitative",
+                        "scale": {"domain": [1700,2020]}},
+                        "y": {"field": "Year Constructed", "type": "quantitative",
+                        "scale": {"domain": [1700,2020]}},
+                        "color": {"value": "#FDD037"} ,
+                        }
+                    }]
+                }
+            ],
+        "config": {}
+        };
+    vegaEmbed("#vis", spec, {mode: "vega-lite"}).then(console.log).catch(console.warn);
+    </script>
 </body>
 </html>
