@@ -1,74 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>This is cherrytao's webpage.</title>
-    <script src="https://cdn.jsdelivr.net/npm/vega@5.25.0/build/vega.min.js" integrity="sha256-na2uPt+tUPV7GRVpc+/ezQj+lGwljIvOJifkmg8f3as=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.15.0/build/vega-lite.min.js" integrity="sha256-WLAn82Ut4GptY/IJf4K/1i+R8ibAkVLFhBVkOovqCK8=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.22.2/build/vega-embed.min.js" integrity="sha256-GfFZ6w7V/y3Ws9eHVsOXZ/F1ZFroThVZraOAx3HAt6s=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.25.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.15.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.22.2"></script>
 </head>
 <body>
-    <p>
-        Data <strong>Visualization</strong>
-        with <em>vegalite</em>.
-    </p>
-    <script>
-    <div id="viz"> </div>
-        var vlSpec = {
-            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-            "data": {"url": "https://raw.githubusercontent.com/cherrycytao/cherrycytao.github.io/main/building_inventory.csv"},
-            // "width": 1000,
-            // "height": 1000,
-            "hconcat": [
-                {"layer": [
-                    {"mark": {"type":"bar","cornerRadiusTopLeft": 3, "cornerRadiusTopRight": 3},
-                    "encoding": {
-                    "x": {"field": "Agency Name", "type": "nominal",
-                    "sort": {"op": "sum", "field": "Square Footage"}},
-                    "y": {"aggregate": "sum", "field": "Square Footage"},
-                    "color": {"value": "gray"}
-                    }     
-                    },
-                    {"transform": [{"filter": {"selection": "brush"}}],
-                    "mark": {"type":"bar","cornerRadiusTopLeft": 3, "cornerRadiusTopRight": 3},
-                    "encoding": {
-                    "x": {"field": "Agency Name", "type": "nominal",
-                    "sort": {"op": "sum", "field": "Square Footage"}},
-                    "y": {"aggregate": "sum", "field": "Square Footage"},
-                    "color": {"value": "grey"}
-                    }
-                    }
-                ]},
-                {"layer":[
-                    {"mark": "point",
-                    "encoding": {
-                    "x": {"field": "Year Acquired", "type": "quantitative",
-                    "scale": {"domain": [1700,2020]}},
-                    "y": {"field": "Year Constructed", "type": "quantitative",
-                    "scale": {"domain": [1700,2020]}},
-                    "color": {"value": "grey"}
-                    }
-                    },
-                    { "selection": {
-                    "brush": {"type": "interval"}},
-                    "transform": 
-                    [{"filter": {"selection": "brush"}}],
-                    "mark": "point",
-                    "encoding": {
-                    "x": {"field": "Year Acquired", "type": "quantitative",
-                    "scale": {"domain": [1700,2020]}},
-                    "y": {"field": "Year Constructed", "type": "quantitative",
-                    "scale": {"domain": [1700,2020]}},
-                    "color": {"value": "green"} ,
-                    }
-                    }
-                ]}
-            ],
-        // "config": {}
-        };
-        vegaEmbed("#viz", vlSpec);
-        
-    </script>
+  <div id="vis"/>
+  <script>
+    const spec = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://raw.githubusercontent.com/cherrycytao/cherrycytao.github.io/main/building_inventory.csv"
+  },
+  "hconcat": [
+    {
+      "layer": [
+        {
+          "mark": {
+            "type": "bar",
+            "cornerRadiusTopLeft": 3,
+            "cornerRadiusTopRight": 3
+          },
+          "encoding": {
+            "x": {
+              "field": "Agency Name",
+              "type": "nominal",
+              "sort": {"op": "sum", "field": "Square Footage"}
+            },
+            "y": {"aggregate": "sum", "field": "Square Footage"},
+            "color": {"value": "gray"}
+          }
+        },
+        {
+          "transform": [{"filter": {"selection": "brush"}}],
+          "mark": {
+            "type": "bar",
+            "cornerRadiusTopLeft": 3,
+            "cornerRadiusTopRight": 3
+          },
+          "encoding": {
+            "x": {
+              "field": "Agency Name",
+              "type": "nominal",
+              "sort": {"op": "sum", "field": "Square Footage"}
+            },
+            "y": {"aggregate": "sum", "field": "Square Footage"},
+            "color": {"value": "grey"}
+          }
+        }
+      ]
+    },
+    {
+      "layer": [
+        {
+          "mark": "point",
+          "encoding": {
+            "x": {
+              "field": "Year Acquired",
+              "type": "quantitative",
+              "scale": {"domain": [1700, 2020]}
+            },
+            "y": {
+              "field": "Year Constructed",
+              "type": "quantitative",
+              "scale": {"domain": [1700, 2020]}
+            },
+            "color": {"value": "grey"}
+          }
+        },
+        {
+          "selection": {"brush": {"type": "interval"}},
+          "transform": [{"filter": {"selection": "brush"}}],
+          "mark": "point",
+          "encoding": {
+            "x": {
+              "field": "Year Acquired",
+              "type": "quantitative",
+              "scale": {"domain": [1700, 2020]}
+            },
+            "y": {
+              "field": "Year Constructed",
+              "type": "quantitative",
+              "scale": {"domain": [1700, 2020]}
+            },
+            "color": {"value": "green"}
+          }
+        }
+      ]
+    }
+  ],
+  "config": {}
+};
+    vegaEmbed("#vis", spec, {mode: "vega-lite"}).then(console.log).catch(console.warn);
+  </script>
 </body>
 </html>
