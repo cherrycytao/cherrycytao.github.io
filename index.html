@@ -9,39 +9,38 @@
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.22.2/build/vega-embed.min.js" integrity="sha256-GfFZ6w7V/y3Ws9eHVsOXZ/F1ZFroThVZraOAx3HAt6s=" crossorigin="anonymous"></script>
 </head>
 <body>
+    <p>
+        Data <strong>Visualization</strong>
+        with <em>vegalite</em>.
+    </p>
     <script>
-    <div id="vis">
-    </div>
+    <div id="viz"> </div>
     // <div id="vis"/>
         var vlSpec = {
             "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-            "data": {"url": "https://raw.githubusercontent.com/cherrycytao/building_inventory.csv"},
-            "width": 2000,
-            "height": 2000,
+            "data": "building_inventory.csv",
+            // "width": 1000,
+            // "height": 1000,
             "hconcat": [
                 {"layer": [
-                    {"mark": {"type":"bar","cornerRadiusTopLeft": 4, "cornerRadiusTopRight": 4},
+                    {"mark": {"type":"bar","cornerRadiusTopLeft": 3, "cornerRadiusTopRight": 3},
                     "encoding": {
                     "x": {"field": "Agency Name", "type": "nominal",
                     "sort": {"op": "sum", "field": "Square Footage"}},
                     "y": {"aggregate": "sum", "field": "Square Footage"},
-                    "color": {"value": "gray"}
+                    // "color": {"value": "gray"}
                     }     
                     },
-                 {"transform": 
-                [
-                 {"filter": {"selection": "brush"}}
-                ],
-                    "mark": {"type":"bar","cornerRadiusTopLeft": 4, "cornerRadiusTopRight": 4},
+                    {"transform": [{"filter": {"selection": "brush"}}],
+                    "mark": {"type":"bar","cornerRadiusTopLeft": 3, "cornerRadiusTopRight": 3},
                     "encoding": {
                     "x": {"field": "Agency Name", "type": "nominal",
                     "sort": {"op": "sum", "field": "Square Footage"}},
                     "y": {"aggregate": "sum", "field": "Square Footage"},
-                    "color": {"value": "#FDD037"}
+                    "color": {"value": "grey"}
                     }
-                }
-                ]
-                },
+                    }
+                ]},
                 {"layer":[
                     {"mark": "point",
                     "encoding": {
@@ -49,29 +48,27 @@
                     "scale": {"domain": [1700,2020]}},
                     "y": {"field": "Year Constructed", "type": "quantitative",
                     "scale": {"domain": [1700,2020]}},
-                    "color": {"value": "gray"}
+                    "color": {"value": "grey"}
                     }
                     },
                     { "selection": {
                     "brush": {"type": "interval"}},
                     "transform": 
-                    [
-                    {"filter": {"selection": "brush"}}
-                    ],
+                    [{"filter": {"selection": "brush"}}],
                     "mark": "point",
                     "encoding": {
-                        "x": {"field": "Year Acquired", "type": "quantitative",
-                        "scale": {"domain": [1700,2020]}},
-                        "y": {"field": "Year Constructed", "type": "quantitative",
-                        "scale": {"domain": [1700,2020]}},
-                        "color": {"value": "#FDD037"} ,
-                        }
-                    }]
-                }
+                    "x": {"field": "Year Acquired", "type": "quantitative",
+                    "scale": {"domain": [1700,2020]}},
+                    "y": {"field": "Year Constructed", "type": "quantitative",
+                    "scale": {"domain": [1700,2020]}},
+                    "color": {"value": "#FDD037"} ,
+                    }
+                    }
+                ]}
             ],
         "config": {}
         };
-    vegaEmbed("#vis", spec, {mode: "vega-lite"}).then(console.log).catch(console.warn);
+        vegaEmbed("#viz", vlSpec, {mode: "vega-lite"}).then(console.log).catch(console.warn);
     </script>
 </body>
 </html>
